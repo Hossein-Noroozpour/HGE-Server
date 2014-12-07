@@ -1,13 +1,18 @@
 __author__ = 'Hossein Noroozpour'
 import socketserver
-import threading
+
+from hge.core.Player import Player
 
 
 class Handler(socketserver.BaseRequestHandler):
+    users = dict()
+    timeout = 3.0
+
     def handle(self):
-        data = self.request.recv(1024).strip()
-        print("Server: ", data)
-        self.request.sendall(data)
+        self.request.settimeout(self.timeout)
+        player = Player(self.request)
+        player.start()
+        player.log()
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 9999
