@@ -1,6 +1,6 @@
 __author__ = 'Hossein Noroozpour'
 from enum import IntEnum, unique
-
+from hge.database.Database import Database
 from hge.security.Connector import Connector
 
 
@@ -17,7 +17,8 @@ class Player():
     def __init__(self, socket):
         self.state = self.State.start
         self.socket = socket
-        self.secure_connection = Connector(socket)
+        self.database = Database()
+        self.secure_connection = Connector(socket, self.database)
 
     def start(self):
         self.secure_connection.authenticate()
