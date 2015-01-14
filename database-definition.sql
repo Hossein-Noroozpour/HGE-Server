@@ -4,8 +4,7 @@ CREATE TABLE IF NOT EXISTS hge_security
 (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     session_key CHAR(32) CHARACTER SET UTF8 NOT NULL,
-    aes_key     CHAR(16) CHARACTER SET UTF8 NOT NULL,
-    aes_iv      CHAR(16) CHARACTER SET UTF8 NOT NULL,
+    aes_key_iv  CHAR(32) CHARACTER SET UTF8 NOT NULL,
     last_login_time DATETIME NOT NULL,
     last_try_time   DATETIME NOT NULL,
     create_time     DATETIME NOT NULL,
@@ -18,8 +17,7 @@ CREATE TABLE IF NOT EXISTS hge_security
 INSERT INTO hge_security
 (
     session_key,
-    aes_key,
-    aes_iv,
+    aes_key_iv,
     last_login_time,
     last_try_time,
     create_time,
@@ -29,8 +27,7 @@ INSERT INTO hge_security
 VALUES
 (
     "01234567890123456789012345678901",
-    "01234567890123456789012345678901",
-    "01234567890123456789012345678901",
+    "01234567890123450123456789012345",
     NOW(),
     NOW(),
     NOW(),

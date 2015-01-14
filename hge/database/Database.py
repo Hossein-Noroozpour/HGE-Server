@@ -11,8 +11,7 @@ class Database():
     SECURITY_TABLE = "hge_security"
     ID_FIELD = "id"
     SESSION_KEY_FIELD = "session_key"
-    AES_KEY_FIELD = "aes_key"
-    AES_IV_FIELD = "aes_iv"
+    AES_KEY_IV_FIELD = "aes_key_iv"
     LAST_LOGIN_TIME_FIELD = "last_login_time"
     LOGIN_TRIES_FIELD = "login_tries"
     LAST_TRY_TIME_FIELD = "last_try_time"
@@ -36,10 +35,9 @@ class Database():
         return "SELECT {} FROM {} WHERE {} = {}".format(quests, table_name, self.ID_FIELD, row_id)
 
     def get_security_row(self, user_id):
-        quests = "{}, {}, {}, {}, {}, {}, {}, {}".format(
+        quests = "{}, {}, {}, {}, {}, {}, {}".format(
             self.SESSION_KEY_FIELD,
-            self.AES_KEY_FIELD,
-            self.AES_IV_FIELD,
+            self.AES_KEY_IV_FIELD,
             self.LAST_LOGIN_TIME_FIELD,
             self.LOGIN_TRIES_FIELD,
             self.LAST_TRY_TIME_FIELD,
@@ -52,12 +50,11 @@ class Database():
             result = dict()
             result[self.ID_FIELD] = user_id
             result[self.SESSION_KEY_FIELD] = row[0]
-            result[self.AES_KEY_FIELD] = row[1]
-            result[self.AES_IV_FIELD] = row[2]
-            result[self.LAST_LOGIN_TIME_FIELD] = row[3]
-            result[self.LOGIN_TRIES_FIELD] = row[4]
-            result[self.LAST_TRY_TIME_FIELD] = row[5]
-            result[self.CREATE_TIME_FIELD] = row[6]
-            result[self.LOGIN_STATE_FIELD] = row[7]
+            result[self.AES_KEY_IV_FIELD] = row[1]
+            result[self.LAST_LOGIN_TIME_FIELD] = row[2]
+            result[self.LOGIN_TRIES_FIELD] = row[3]
+            result[self.LAST_TRY_TIME_FIELD] = row[4]
+            result[self.CREATE_TIME_FIELD] = row[5]
+            result[self.LOGIN_STATE_FIELD] = row[6]
             return result
         return None

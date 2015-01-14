@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/HGE-Server.iml" filepath="$PROJECT_DIR$/.idea/HGE-Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../HSAServer/.idea/HSAServer.iml" filepath="$PROJECT_DIR$/../HSAServer/.idea/HSAServer.iml" />
     </modules>
   </component>
 </project>

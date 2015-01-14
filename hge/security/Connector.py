@@ -44,10 +44,14 @@ class Connector():
             Database.LAST_LOGIN_TIME_FIELD] < datetime.datetime.now() + datetime.timedelta(minutes=30):
             raise self.MaxLoginTryReached(user_sec_row)
         elif user_sec_row[Database.LOGIN_STATE_FIELD] == self.LoginState.NOT_LOGGED_IN:
-            self.cryptor = CryptAES(user_sec_row[Database.AES_KEY_FIELD], user_sec_row[Database.AES_IV_FIELD])
+            self.cryptor = CryptAES(user_sec_row[Database.AES_KEY_IV_FIELD][:CryptAES.BLOCK_SIZE],
+                                    user_sec_row[Database.AES_KEY_IV_FIELD][CryptAES.BLOCK_SIZE:])
             self.session_key = self.cryptor.create_random_string(self.SESSION_KEY_SIZE +
                                                                  randrange(self.SESSION_KEY_SIZE))
+            print(self.session_key)
             self.socket.sendall(self.cryptor.encrypt(self.session_key))
+            self.session_key = self.session_key[:self.SESSION_KEY_SIZE]
+            print(self.session_key)
             #wait for responce from client
             #decide
             #now update database

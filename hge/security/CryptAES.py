@@ -13,6 +13,7 @@ class CryptAES:
         self.iv = aes_iv
         self.pad = self.pkcs7_padding
         self.unpad = self.pkcs7_unpadding
+        self.cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
 
     def zero_padding(self, d):
         return d + (self.BLOCK_SIZE - len(d) % self.BLOCK_SIZE) * chr(0)
@@ -33,7 +34,7 @@ class CryptAES:
     @staticmethod
     def bytes_to_string(d):
         s = ""
-        for i in range(0, len(d)):
+        for i in range(len(d)):
             s += chr(d[i])
         return s
 
@@ -41,16 +42,13 @@ class CryptAES:
         if type(raw) != str:
             raise TypeError("Only string can be encrypted")
         d = self.pad(raw)
-        cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
-        return base64.b64encode(cipher.encrypt(d))
+        return self.cipher.encrypt(d)
 
     def decrypt(self, enc):
-        enc = base64.b64decode(enc)
-        cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
-        return self.unpad(cipher.decrypt(enc))
+        return self.unpad(self.cipher.decrypt(enc))
 
     def create_random_string(self, size: int) -> str:
-        return base64.b64encode(Random.new().read(CryptAES.BLOCK_SIZE))[:size].decode(self.CHAR_CODING)
+        return base64.b64encode(Random.new().read(size))[:size].decode(self.CHAR_CODING)
 
 if '__main__' == __name__:
     print(AES.key_size)
